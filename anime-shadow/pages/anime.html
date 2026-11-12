@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست انیمه‌ها | انیمه شادو</title>
+    <meta name="description" content="لیست کامل انیمه‌های سایت انیمه شادو با زیرنویس فارسی. جستجو و فیلتر بر اساس ژانر.">
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/images/logo.png" alt="لوگوی انیمه شادو" class="logo-s">
+            <span class="logo-text">Anime Shadow</span>
+        </a>
+        <nav class="nav-bar" id="desktopNav">
+            <a href="../index.html" class="nav-btn">خانه</a>
+            <a href="anime.html" class="nav-btn active">انیمه‌ها</a>
+            <a href="about.html" class="nav-btn">درباره ما</a>
+            <a href="contact.html" class="nav-btn">تماس با ما</a>
+        </nav>
+        <div class="auth-buttons" id="authButtons">
+            <button class="btn-auth outline" onclick="openAuthModal('login')">ورود</button>
+            <button class="btn-auth" onclick="openAuthModal('register')">ثبت‌نام</button>
+        </div>
+        <div class="user-info" id="userInfo">
+            <span>سلام، <span id="userName"></span>!</span>
+            <button class="btn-auth outline" onclick="logout()" style="font-size:12px;">خروج</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </header>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-mobile" onclick="closeMobileMenu()">&times;</button>
+        <a href="../index.html" class="nav-btn">خانه</a>
+        <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+        <a href="about.html" class="nav-btn">درباره ما</a>
+        <a href="contact.html" class="nav-btn">تماس با ما</a>
+    </nav>
+
+    <main>
+        <h1 class="page-title">لیست انیمه‌ها</h1>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="جستجوی انیمه..." oninput="performSearch()" 
+                   style="flex:1; min-width:200px; padding:12px; border-radius:8px; border:1px solid #555; background:#2a2a2e; color:white; font-family:'Vazirmatn',sans-serif;">
+            <select id="genreFilter" onchange="performSearch()" 
+                    style="padding:12px; border-radius:8px; border:1px solid #555; background:#2a2a2e; color:white; font-family:'Vazirmatn',sans-serif;">
+                <option value="all">همه ژانرها</option>
+                <option value="action">اکشن</option>
+                <option value="fantasy">فانتزی</option>
+                <option value="adventure">ماجراجویی</option>
+                <option value="sci-fi">علمی-تخیلی</option>
+            </select>
+        </div>
+
+        <div class="anime-grid" id="animeGrid"></div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/images/logo.png" alt="لوگو" class="footer-logo-img">
+                <span class="footer-brand">Anime Shadow</span>
+            </div>
+            <div class="footer-links">
+                <a href="about.html">درباره ما</a>
+                <a href="contact.html">تماس با ما</a>
+                <a href="privacy.html">حریم خصوصی</a>
+                <a href="terms.html">قوانین</a>
+            </div>
+            <p class="footer-text">© تمامی حقوق این وب‌سایت متعلق به <strong>انیمه شادو</strong> می‌باشد.</p>
+            <p class="footer-warning">هر گونه کپی‌برداری از طرح قالب یا مطالب، پیگرد قانونی دارد.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/search.js"></script>
+    <script>
+        function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            const genre = document.getElementById('genreFilter').value;
+            searchAnime(query, genre, 'animeGrid');
+        }
+        document.addEventListener('DOMContentLoaded', () => performSearch());
+    </script>
+</body>
+</html>

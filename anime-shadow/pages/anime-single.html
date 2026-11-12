@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اطلاعات انیمه | انیمه شادو</title>
+    <meta name="description" content="دانلود انیمه با زیرنویس فارسی از انیمه شادو">
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .anime-detail {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            border-right: 5px solid var(--primary-purple);
+            border-left: 2px solid var(--primary-blue);
+        }
+        .anime-detail .anime-poster {
+            width: 180px; height: 260px;
+        }
+        .anime-detail-info { flex: 1; min-width: 250px; }
+        .anime-detail-info h1 { color: var(--accent-light); margin-top: 0; }
+        .anime-detail-info p { color: var(--text-muted); line-height: 1.8; font-size: 14px; }
+        
+        .episodes-list { margin-top: 20px; }
+        .episode-row {
+            background: #3a3a40;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 4px solid var(--primary-blue);
+        }
+        .episode-row:hover { background: #45454c; }
+        .episode-dl {
+            background: var(--gradient-main);
+            color: white;
+            text-decoration: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .episode-dl:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/images/logo.png" alt="لوگوی انیمه شادو" class="logo-s">
+            <span class="logo-text">Anime Shadow</span>
+        </a>
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-btn">خانه</a>
+            <a href="anime.html" class="nav-btn active">انیمه‌ها</a>
+            <a href="about.html" class="nav-btn">درباره ما</a>
+            <a href="contact.html" class="nav-btn">تماس با ما</a>
+        </nav>
+        <div class="auth-buttons" id="authButtons">
+            <a href="login.html" class="btn-auth outline">ورود</a>
+            <a href="register.html" class="btn-auth">ثبت‌نام</a>
+        </div>
+        <div class="user-info" id="userInfo">
+            <span>سلام، <span id="userName"></span>!</span>
+            <a href="profile.html" class="btn-auth outline" style="font-size:12px; text-decoration:none;">پروفایل</a>
+            <button class="btn-auth outline" onclick="logout()" style="font-size:12px;">خروج</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </header>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-mobile" onclick="closeMobileMenu()">&times;</button>
+        <a href="../index.html" class="nav-btn">خانه</a>
+        <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+        <a href="about.html" class="nav-btn">درباره ما</a>
+        <a href="contact.html" class="nav-btn">تماس با ما</a>
+    </nav>
+
+    <main>
+        <div id="animeDetailContainer">
+            <p style="color:var(--text-muted); text-align:center; padding:40px;">در حال بارگذاری اطلاعات انیمه...</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/images/logo.png" alt="لوگو" class="footer-logo-img">
+                <span class="footer-brand">Anime Shadow</span>
+            </div>
+            <div class="footer-links">
+                <a href="about.html">درباره ما</a>
+                <a href="contact.html">تماس با ما</a>
+                <a href="privacy.html">حریم خصوصی</a>
+                <a href="terms.html">قوانین</a>
+            </div>
+            <p class="footer-text">© تمامی حقوق این وب‌سایت متعلق به <strong>انیمه شادو</strong> می‌باشد.</p>
+            <p class="footer-warning">هر گونه کپی‌برداری از طرح قالب یا مطالب، پیگرد قانونی دارد.</p>
+        </div>
+    </footer>
+
+    <!-- ========== اسکریپت‌ها به ترتیب صحیح ========== -->
+    <!-- ۱. اول داده‌ها (anime-data.js) -->
+    <script src="../assets/js/anime-data.js"></script>
+    <!-- ۲. بعد main.js -->
+    <script src="../assets/js/main.js"></script>
+    <!-- ۳. بعد anime.js -->
+    <script src="../assets/js/anime.js"></script>
+    <!-- ۴. در آخر اسکریپت داخلی که از داده‌ها استفاده می‌کند -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // بررسی وجود animeDatabase
+            if (typeof animeDatabase === 'undefined') {
+                document.getElementById('animeDetailContainer').innerHTML = `
+                    <div style="text-align:center; padding:60px 20px;">
+                        <h1 style="color:#ff4a4a;">خطا: داده‌های انیمه بارگذاری نشد!</h1>
+                        <p style="color:var(--text-muted); margin:20px 0;">لطفاً مطمئن شوید فایل <code>assets/js/anime-data.js</code> وجود دارد و مسیر آن صحیح است.</p>
+                        <a href="anime.html" class="btn-watch">بازگشت به لیست انیمه‌ها</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const animeId = urlParams.get('id');
+            const container = document.getElementById('animeDetailContainer');
+
+            if (!animeId || !animeDatabase[animeId]) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:60px 20px;">
+                        <h1 style="color:var(--accent-light);">انیمه مورد نظر پیدا نشد!</h1>
+                        <p style="color:var(--text-muted); margin:20px 0;">لطفاً از صفحه لیست انیمه‌ها یک انیمه را انتخاب کنید.</p>
+                        <a href="anime.html" class="btn-watch">بازگشت به لیست انیمه‌ها</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const anime = animeDatabase[animeId];
+            document.title = anime.title + ' | انیمه شادو';
+
+            const episodesHTML = anime.episodes.map(ep => `
+                <div class="episode-row">
+                    <span>${ep.title}</span>
+                    <a href="${ep.link}" class="episode-dl" download>⬇ دانلود</a>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="anime-detail">
+                    <div class="anime-poster">
+                        <img src="../${anime.poster}" alt="${anime.title}" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <div class="anime-detail-info">
+                        <h1>${anime.title}</h1>
+                        <p>${anime.description}</p>
+                        <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:15px;font-size:13px;color:var(--text-muted);">
+                            <span><strong style="color:var(--accent-light);">ژانر:</strong> ${anime.genre.join('، ')}</span>
+                            <span><strong style="color:var(--accent-light);">سال:</strong> ${anime.year}</span>
+                            <span><strong style="color:var(--accent-light);">وضعیت:</strong> ${anime.status}</span>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-top:20px;">
+                            <a href="anime.html" class="btn-watch">بازگشت به لیست</a>
+                            <button class="fav-btn" data-favorite-id="${animeId}" onclick="toggleFavorite('${animeId}', '${anime.title}', '${anime.poster.split('/').pop()}')">🤍</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="episodes-list">
+                    <h2 class="page-title">لیست قسمت‌ها</h2>
+                    ${episodesHTML || '<p style="color:var(--text-muted);">قسمتی برای این انیمه ثبت نشده است.</p>'}
+                </div>
+            `;
+
+            if (typeof updateFavoriteButtons === 'function') updateFavoriteButtons();
+        });
+    </script>
+</body>
+</html>
