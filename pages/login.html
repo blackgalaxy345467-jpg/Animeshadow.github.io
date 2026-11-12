@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود | انیمه شادو</title>
+    <meta name="description" content="ورود به حساب کاربری انیمه شادو">
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/images/logo.png" alt="لوگوی انیمه شادو" class="logo-s">
+            <span class="logo-text">Anime Shadow</span>
+        </a>
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-btn">خانه</a>
+            <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+            <a href="about.html" class="nav-btn">درباره ما</a>
+            <a href="contact.html" class="nav-btn">تماس با ما</a>
+        </nav>
+        <div class="auth-buttons" id="authButtons">
+            <a href="login.html" class="btn-auth outline">ورود</a>
+            <a href="register.html" class="btn-auth">ثبت‌نام</a>
+        </div>
+        <div class="user-info" id="userInfo">
+            <span>سلام، <span id="userName"></span>!</span>
+            <button class="btn-auth outline" onclick="logout()" style="font-size:12px;">خروج</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </header>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-mobile" onclick="closeMobileMenu()">&times;</button>
+        <a href="../index.html" class="nav-btn">خانه</a>
+        <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+        <a href="about.html" class="nav-btn">درباره ما</a>
+        <a href="contact.html" class="nav-btn">تماس با ما</a>
+        <hr style="border-color:#444; width:100%;">
+        <a href="login.html" class="nav-btn">ورود</a>
+        <a href="register.html" class="nav-btn">ثبت‌نام</a>
+    </nav>
+
+    <main>
+        <div style="max-width: 450px; margin: 40px auto;">
+            <h1 class="page-title" style="text-align:center;">ورود به حساب</h1>
+            <div style="background:var(--card-bg); padding:30px; border-radius:15px; border-right:5px solid var(--primary-purple); border-left:2px solid var(--primary-blue);">
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginUsername">نام کاربری</label>
+                        <input type="text" id="loginUsername" placeholder="نام کاربری خود را وارد کنید" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">رمز عبور</label>
+                        <input type="password" id="loginPassword" placeholder="رمز عبور خود را وارد کنید" required>
+                    </div>
+                    <button type="submit" class="form-submit">ورود</button>
+                </form>
+                <div class="form-switch">
+                    حساب ندارید؟ <a href="register.html">ثبت‌نام کنید</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/images/logo.png" alt="لوگو" class="footer-logo-img">
+                <span class="footer-brand">Anime Shadow</span>
+            </div>
+            <div class="footer-links">
+                <a href="about.html">درباره ما</a>
+                <a href="contact.html">تماس با ما</a>
+                <a href="privacy.html">حریم خصوصی</a>
+                <a href="terms.html">قوانین</a>
+            </div>
+            <p class="footer-text">© تمامی حقوق این وب‌سایت متعلق به <strong>انیمه شادو</strong> می‌باشد.</p>
+            <p class="footer-warning">هر گونه کپی‌برداری از طرح قالب یا مطالب، پیگرد قانونی دارد.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (!user) {
+                showMessage('نام کاربری یا رمز عبور اشتباه است.', 'error');
+                return;
+            }
+            
+            localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
+            showMessage('با موفقیت وارد شدید!', 'success');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

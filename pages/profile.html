@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل | انیمه شادو</title>
+    <link rel="shortcut icon" href="../assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border-right: 5px solid var(--primary-purple);
+            border-left: 2px solid var(--primary-blue);
+            margin-bottom: 25px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            border: 3px solid var(--primary-purple);
+        }
+        .profile-name {
+            text-align: center;
+            color: var(--accent-light);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .profile-role {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-box {
+            background: #2a2a2e;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        .stat-box .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-light);
+            display: block;
+        }
+        .stat-box .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .danger-btn {
+            background: #ff4a4a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .danger-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../index.html" class="header-logo">
+            <img src="../assets/images/logo.png" alt="لوگوی انیمه شادو" class="logo-s">
+            <span class="logo-text">Anime Shadow</span>
+        </a>
+        <nav class="nav-bar">
+            <a href="../index.html" class="nav-btn">خانه</a>
+            <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+            <a href="about.html" class="nav-btn">درباره ما</a>
+            <a href="contact.html" class="nav-btn">تماس با ما</a>
+        </nav>
+        <div class="auth-buttons" id="authButtons">
+            <a href="login.html" class="btn-auth outline">ورود</a>
+            <a href="register.html" class="btn-auth">ثبت‌نام</a>
+        </div>
+        <div class="user-info" id="userInfo">
+            <span>سلام، <span id="userName"></span>!</span>
+            <button class="btn-auth outline" onclick="logout()" style="font-size:12px;">خروج</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </header>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="close-mobile" onclick="closeMobileMenu()">&times;</button>
+        <a href="../index.html" class="nav-btn">خانه</a>
+        <a href="anime.html" class="nav-btn">انیمه‌ها</a>
+        <a href="about.html" class="nav-btn">درباره ما</a>
+        <a href="contact.html" class="nav-btn">تماس با ما</a>
+        <hr style="border-color:#444; width:100%;">
+        <a href="login.html" class="nav-btn">ورود</a>
+        <a href="register.html" class="nav-btn">ثبت‌نام</a>
+    </nav>
+
+    <main>
+        <h1 class="page-title">پروفایل کاربری</h1>
+        
+        <div id="notLoggedIn" style="display:none; background:var(--card-bg); padding:40px; border-radius:15px; text-align:center; border-right:5px solid var(--primary-purple);">
+            <p style="color:var(--text-muted); margin-bottom:20px;">شما وارد حساب کاربری خود نشده‌اید.</p>
+            <a href="login.html" class="btn-watch">ورود به حساب</a>
+        </div>
+
+        <div id="profileContent" style="display:none;">
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">?</div>
+                <h2 class="profile-name" id="profileName">-</h2>
+                <p class="profile-role">کاربر انیمه شادو</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-number" id="statFavorites">0</span>
+                        <span class="stat-label">علاقه‌مندی‌ها</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="statComments">0</span>
+                        <span class="stat-label">نظرات</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number" id="statDownloads">0</span>
+                        <span class="stat-label">دانلودها</span>
+                    </div>
+                </div>
+
+                <div style="text-align:center;">
+                    <button class="danger-btn" onclick="deleteAccount()">حذف حساب کاربری</button>
+                </div>
+            </div>
+
+            <div style="background:var(--card-bg); padding:25px; border-radius:15px; border-right:5px solid var(--primary-purple);">
+                <h3 style="color:var(--accent-light); margin-top:0; margin-bottom:15px;">اطلاعات حساب</h3>
+                <p style="color:var(--text-muted); margin-bottom:10px;"><strong style="color:var(--text-light);">نام کاربری:</strong> <span id="infoUsername">-</span></p>
+                <p style="color:var(--text-muted);"><strong style="color:var(--text-light);">نوع حساب:</strong> کاربر عادی</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/images/logo.png" alt="لوگو" class="footer-logo-img">
+                <span class="footer-brand">Anime Shadow</span>
+            </div>
+            <div class="footer-links">
+                <a href="about.html">درباره ما</a>
+                <a href="contact.html">تماس با ما</a>
+                <a href="privacy.html">حریم خصوصی</a>
+                <a href="terms.html">قوانین</a>
+            </div>
+            <p class="footer-text">© تمامی حقوق این وب‌سایت متعلق به <strong>انیمه شادو</strong> می‌باشد.</p>
+            <p class="footer-warning">هر گونه کپی‌برداری از طرح قالب یا مطالب، پیگرد قانونی دارد.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            if (!user) {
+                document.getElementById('notLoggedIn').style.display = 'block';
+                document.getElementById('profileContent').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('notLoggedIn').style.display = 'none';
+            document.getElementById('profileContent').style.display = 'block';
+
+            document.getElementById('profileName').textContent = user.username;
+            document.getElementById('profileAvatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('infoUsername').textContent = user.username;
+
+            // آمار (نمایشی)
+            const comments = JSON.parse(localStorage.getItem('comments_blackclover') || '[]');
+            document.getElementById('statComments').textContent = comments.length;
+        });
+
+        function deleteAccount() {
+            if (!confirm('آیا از حذف حساب کاربری خود مطمئن هستید؟ این عمل قابل بازگشت نیست.')) return;
+            
+            const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (!user) return;
+
+            let users = JSON.parse(localStorage.getItem('users') || '[]');
+            users = users.filter(u => u.username !== user.username);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.removeItem('currentUser');
+
+            alert('حساب کاربری شما حذف شد.');
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+/* ============================================================
+   ANIME SHADOW - Extra Styles
+   ============================================================ */
+
+/* دکمه علاقه‌مندی */
+.fav-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+    line-height: 1;
+}
+
+.fav-btn:hover {
+    transform: scale(1.2);
+}
+
+/* صفحه ۴۰۴ */
+.error-page {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.error-page h1 {
+    font-size: 120px;
+    color: var(--primary-purple);
+    margin: 0;
+    text-shadow: 0 0 30px rgba(106, 74, 138, 0.5);
+}
+
+.error-page p {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin: 20px 0;
+}
+
+.error-page .btn-watch {
+    font-size: 16px;
+    padding: 12px 30px;
+}
+
+/* انیمیشن ورود صفحات */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-section {
+    animation: fadeInUp 0.4s ease;
+}
